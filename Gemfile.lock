@@ -1,0 +1,12 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    colorize (0.7.5)
+    htmlentities (4.3.3)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  colorize
+  htmlentities
