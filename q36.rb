@@ -12,8 +12,10 @@ def main
   itself = -> x { x }
 
   table = morphemes(analyzed_text)
+    .reject { |morph| morph[:pos] == "記号" }
     .group_by(&itself).map { |k,v| [k, v.size] } # frequencies
     .sort_by(&:last).reverse
+    .take(10)
 
   # 表示する
 

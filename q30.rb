@@ -110,6 +110,12 @@ def analyzed_text
   end
 end
 
+def to_type(occur)
+  ret = occur.dup
+  ret.delete(:surface)
+  ret
+end
+
 # [Sentence, ...] -> ()
 def dump_text(text)
   print '['
