@@ -61,14 +61,6 @@ def plot_graph(table)
   end
 end
 
-def histogram_base(ulimit)
-  bottoms = (0...Float::INFINITY).lazy
-    .map { |i| i * GRANULARITY }
-    .take_while { |x| x <= ulimit }
-
-  bottoms.map { |b| [b..(b+GRANULARITY-1), 0] }.to_h
-end
-
 def main
   # [[morpheme, frqeuency], ...]
   freq_table = morphemes(analyzed_text)
