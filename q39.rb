@@ -31,13 +31,6 @@ module Enumerable
   end
 end
 
-GRANULARITY = 1000
-
-def freq_to_range(freq)
-  bottom = freq / GRANULARITY * GRANULARITY
-  bottom..(bottom+GRANULARITY-1)
-end
-
 require 'gnuplot'
 
 include Gnuplot
