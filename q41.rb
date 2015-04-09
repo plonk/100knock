@@ -59,12 +59,18 @@ def parse_feature(feature_string)
   { pos: pos, pos1: pos1, base: base }
 end
 
-def load_document
-  xml = "<root>"
-  xml.concat  File.open("neko.txt.cabocha", &:read)
-  xml.concat "</root>"
+def parse(text)
+  body = IO.popen('cabocha -f 3', 'r+') do |f|
+    f.write(text)
+    f.close_write
+    f.read
+  end
 
-  doc = Nokogiri::XML(xml)
+  convert_from_xml_document Nokogiri::XML("<root>#{body}</root>")  
+end
+
+# Nokogiri の Document から内部形式に変換する。
+def convert_from_xml_document(doc)
   doc.css('root > sentence').map { |sentence|
     chunks = sentence.css('chunk').map { |chunk|
       morphemes = chunk.css('tok').map { |tok|
@@ -81,6 +87,19 @@ def load_document
     end
     chunks
   }
+end
+
+def load_document
+  xml = "<root>"
+  xml.concat  File.open("neko.txt.cabocha", &:read)
+  xml.concat "</root>"
+
+  doc = Nokogiri::XML(xml)
+  convert_from_xml(doc)
+end
+
+def pair_up(chunks)
+  chunks.flat_map { |c| c.dst != -1 ? [[c, chunks[c.dst]]] : [] }
 end
 
 def main

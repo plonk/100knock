@@ -5,4 +5,5 @@ gem 'htmlentities'
 gem 'gnuplot'
 gem 'unicode'
 gem 'nokogiri'
+gem 'graphviz'
 

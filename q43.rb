@@ -9,10 +9,6 @@
 
 require_relative 'q41'
 
-def pair_up(chunks)
-  chunks.flat_map { |c| c.dst != -1 ? [[c, chunks[c.dst]]] : [] }
-end
-
 def main
   matches = load_document.flat_map { |chunks|
     pair_up(chunks).select { |c1, c2|
