@@ -95,7 +95,7 @@ def load_document
   xml.concat "</root>"
 
   doc = Nokogiri::XML(xml)
-  convert_from_xml(doc)
+  convert_from_xml_document(doc)
 end
 
 def pair_up(chunks)
