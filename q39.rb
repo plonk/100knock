@@ -40,7 +40,7 @@ def plot_graph(table)
     Plot.new(gp) do |p|
       p.logscale 'x'
       p.logscale 'y'
-      p.xrange '[1:]'
+      p.xrange '[1:10000]'
       p.xlabel '出現頻度順位'
       p.ylabel '出現頻度'
       p.style 'fill solid'
@@ -61,7 +61,7 @@ def main
     .map { |occur| to_type(occur) } # 表層形を無視する。
     .frequencies
   
-  freqs = freq_table.transpose[1].uniq.sort.reverse
+  freqs = freq_table.transpose[1].sort.reverse
   plot_graph( freqs.each.with_index(1).to_a.transpose )
 end
 
