@@ -4,3 +4,5 @@ gem 'colorize'
 gem 'htmlentities'
 gem 'gnuplot'
 gem 'unicode'
+gem 'nokogiri'
+

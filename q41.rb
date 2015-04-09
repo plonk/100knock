@@ -48,6 +48,10 @@ class Chunk
     morphs.map(&:surface).join
   end
 
+  def unpunctuated_text
+    morphs.reject { |m| m.pos=='記号' }.map(&:surface).join
+  end
+
 end
 
 def parse_feature(feature_string)
