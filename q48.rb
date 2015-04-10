@@ -51,4 +51,4 @@ def main
   end
 end
 
-main
+main if __FILE__ == $0
