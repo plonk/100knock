@@ -72,24 +72,6 @@ B.3.
 
 require_relative 'q41'
 
-class Hash
-  def value_map(&block)
-    raise 'block' unless block
-
-    each.with_object({}) do |(key, val), hash|
-      hash[key] = block.(val)
-    end
-  end
-end
-
-# 対のリストを、値として配列を持つ Hash に変換する
-def to_multi_hash(ls)
-  ls.each.with_object({}) do |(k,v), hash|
-    hash[k] ||= []
-    hash[k] += [v]
-  end
-end
-
 def tabulate(list)
   list.each do |verb, particles|
     pstr = particles.map(&:base).join(' ')
