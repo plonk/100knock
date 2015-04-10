@@ -32,22 +32,7 @@
 
 require_relative 'q41'
 
-
-require 'binding_of_caller'
-
-class Symbol
-  def as_method(receiver = binding.of_caller(1).eval('self'))
-    receiver.method(self)
-  end
-end
-
 class Hash
-  def ===(obj)
-    all? do |k,v|
-      v === obj.send(k)
-    end
-  end
-
   def to_pred
     -> obj { all? { |k,v| v === obj.send(k) } }
   end
