@@ -42,8 +42,9 @@ def main
   doc = load_document
 
   paths = doc.flat_map do |sent|
-    sent.select { |c| c.morphs.any?(&Noun_p) }.map { |chunk| path_to_root(chunk, sent) }
-  end.reject { |path| path.size==1 }
+    sent.select { |c| c.morphs.any?(&Noun_p) }
+      .map { |chunk| path_to_root(chunk, sent) }
+  end
 
   paths.each do |p|
     puts render_path(p)
