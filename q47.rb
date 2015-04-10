@@ -51,7 +51,7 @@ end
 def main
   doc = load_document
 
-  triples = doc.lazy.flat_map { |cs|
+  triples = doc.flat_map { |cs|
     pair_up(cs).select { |c1, c2|
       left = c1.morphs
       right = c2.morphs
@@ -61,7 +61,6 @@ def main
        { pos: '助詞', base: 'を' } === left[1]) &&
       (right.any? { |m| m.pos == '動詞' })
     }.map { |c1, c2|
-      p [c2.id, c2.dst, c2.srcs]
       deps = cs.values_at(*c2.srcs).select { |c| c.morphs.any? { |m| m.pos=='助詞' } && c!=c1}
         .sort_by { |c| c.morphs.reverse.find { |m| m.pos=='助詞' }.base }
       particles = deps.map { |c| c.morphs.reverse.find { |m| m.pos=='助詞' } }.map(&:base)
