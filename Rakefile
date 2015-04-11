@@ -1,7 +1,8 @@
 task :download do
   urls = ['http://www.cl.ecei.tohoku.ac.jp/nlp100/data/hightemp.txt',
           'http://www.cl.ecei.tohoku.ac.jp/nlp100/data/jawiki-country.json.gz',
-          'http://www.cl.ecei.tohoku.ac.jp/nlp100/data/neko.txt']
+          'http://www.cl.ecei.tohoku.ac.jp/nlp100/data/neko.txt',
+          'http://www.cl.ecei.tohoku.ac.jp/nlp100/data/nlp.txt']
   urls.each do |url|
     puts "downloading #{url}"
     system('wget', '-qc', url)

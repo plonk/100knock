@@ -6,4 +6,5 @@ gem 'gnuplot'
 gem 'unicode'
 gem 'nokogiri'
 gem 'ruby-graphviz'
+gem 'fast-stemmer'
 

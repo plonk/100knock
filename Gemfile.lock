@@ -2,6 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     colorize (0.7.5)
+    fast-stemmer (1.0.2)
     gnuplot (2.6.2)
     htmlentities (4.3.3)
     mini_portile (0.6.2)
@@ -15,6 +16,7 @@ PLATFORMS
 
 DEPENDENCIES
   colorize
+  fast-stemmer
   gnuplot
   htmlentities
   nokogiri
