@@ -30,7 +30,7 @@ def output(edges, filename)
   edges.each do |e|
     gov_idx, = e.from
     dep_idx, = e.to
-    g.add_edges(nodes[gov_idx], nodes[dep_idx], label: e.type)
+    g.add_edges(nodes[gov_idx], nodes[dep_idx], label: ' '+e.type)
   end
 
   g.output(png: filename)
@@ -43,7 +43,7 @@ def to_graphs(doc)
       dependent = dep.css('dependent').first
       type = dep['type']
 
-      Edge[[gov['idx'], gov.text], [dependent['idx'], dependent.text], ' '+type]
+      Edge[[gov['idx'], gov.text], [dependent['idx'], dependent.text], type]
     end
   end
 end
