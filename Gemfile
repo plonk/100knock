@@ -7,4 +7,5 @@ gem 'unicode'
 gem 'nokogiri'
 gem 'ruby-graphviz'
 gem 'fast-stemmer'
-
+gem 'sinatra'
+gem 'activesupport'
