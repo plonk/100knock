@@ -1,11 +1,5 @@
 def cipher(str)
-  str.each_char.map { |c|
-    if c =~ /\A[a-z]\z/
-      (219 - c.ord).chr
-    else
-      c
-    end
-  }.join
+  str.gsub(/[a-z]/) { |c| (219 - c.ord).chr }
 end
 
 msg = "As a language becomes more expressive, its programs become less amenable to formal manipulation."
