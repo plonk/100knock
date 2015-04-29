@@ -89,6 +89,11 @@ class Program
     void load_feature_definition() {
         words.clear();
         ifstream f("features.txt");
+        if (f.fail()) {
+            perror("features.txt");
+            exit(1);
+        }
+
         string feat;
         while (getline(f, feat)) {
             words.push_back(feat);
@@ -137,15 +142,21 @@ class Program
         return ret;
     }
 
+    string datafile;
     vector<double> polarities;
     vector<string> sentences;
     vector<vector<bool> > feature_bundles;
     size_t nsentences;
 
     void load_data() {
-        ifstream f("sentiment.txt");
-        string line;
+        ifstream f(datafile);
 
+        if (f.fail()) {
+            perror(datafile.c_str());
+            exit(1);
+        }
+
+        string line;
         while (getline(f, line)) {
             polarities.push_back( line[0] == '+' ? 1.0 : 0.0 );
             string s = line.substr(3);
@@ -172,10 +183,19 @@ class Program
         }
     }
 
+    void print_weights(const vector<double>& w) {
+        cout << '[';
+        for (size_t i = 0; i < w.size(); i++) {
+            if (i != 0) cout << ", ";
+            cout << w[i];
+        }
+        cout << "]" << endl;
+    }
+
 public:
     void main() {
         load_feature_definition();
-        cerr << "stems loaded\n";
+        cerr << words.size() << " stems loaded\n";
         load_data();
         cerr << "data loaded\n";
 
@@ -202,10 +222,13 @@ public:
             cerr << endl;
         }
 
-        print_result(weights);
+        print_weights(weights);
     }
+
+    Program(const char* datafile_path)
+        : datafile(datafile_path) {}
 };
 
 int main(int argc, char* argv[]) {
-    Program().main();
+    Program(argv[1] ? argv[1] : "sentiment.txt").main();
 }

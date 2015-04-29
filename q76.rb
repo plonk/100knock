@@ -1,7 +1,11 @@
-# ロジスティック回帰
-# http://gihyo.jp/dev/serial/01/machine-learning/0020
-
-# 実行するのに 80 分かかる
+# 76. ラベル付け
+#
+# 学習データに対してロジスティック回帰モデルを適用し，正解のラベル，予
+# 測されたラベル，予測確率をタブ区切り形式で出力せよ．
+#!/usr/bin/env ruby
+# 75. 素性の重み
+#
+# 73で学習したロジスティック回帰モデルの中で，重みの高い素性トップ10と，重みの低い素性トップ10を確認せよ．
 
 require 'pp'
 require_relative 'util'
@@ -43,7 +47,7 @@ class Program
     @feature_flag_set = []
     @polarities = []
     @sentences = []
-    File.open('sentiment.txt') do |f|
+    File.open(@sentiment_txt) do |f|
       f.each_line.each.with_index do |line, i|
         @polarities[i] = line[0] == '+' ? 1 : 0
         s = line[3..-2]
@@ -54,42 +58,27 @@ class Program
     @nsentences = @sentences.size
   end
 
+  def usage!
+    STDERR.puts "#{$0} <SENTENCE>"
+    exit 1
+  end
+
   def main
+    raise 'Usage: q76.rb [weights.txt] [sentiment.txt]' if ARGV.size > 2
+    @weights_txt = ARGV[0] || 'weights.txt'
+    @sentiment_txt = ARGV[1] || 'sentiment.txt'
+    
     load_feature_definition
     load_data
-    STDERR.puts 'data loaded'
-
-    # ------------------------------------------
-    srand
-    weights = randn(@words.size + 1)
-    eta = 0.1
-
-    50.times do |i|
-      STDERR.print "iteration #{i+1}"
-
-      list = (0...@nsentences).to_a
-      list.shuffle!
-
-      list.each do |n|
-        features = @feature_flag_set[n] + [1]
-        prediction = sigmoid inner(weights, features)
-
-        weights.map!.with_index do |weight, i|
-          weight - eta * (prediction - @polarities[n]) * features[i]
-        end
-      end
-
-      eta *= 0.9 # 学習率を減衰させる
-
-      STDERR.puts
-    end
-
+    weights = eval File.read(@weights_txt)
     print_result(weights)
   end
 
   def print_result(w)
     @feature_flag_set.each.with_index do |v, i|
-      puts "%d\t%.2f\t%s" % [@polarities[i], sigmoid(inner(w,phi(*v))), @sentences[i]]
+      prediction = sigmoid inner(w, phi(*@feature_flag_set[i]))
+      positive_p = prediction >= 0.50
+      puts [@polarities[i]==1 ? '+1' : '-1', positive_p ? '+1' : '-1', positive_p ? prediction : (1-prediction)].join("\t")
     end
   end
 end
