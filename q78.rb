@@ -55,9 +55,7 @@ def cross_validate(i)
   STDERR.puts "k = #{i}"
   system("logistic_regression/logistic_regression sentiment.txt.#{i}.train > sentiment.txt.#{i}.weights")
   data = `ruby q76.rb sentiment.txt.#{i}.weights sentiment.txt.#{i}.test`.each_line.map { |l| l1, l2 = l.chomp.split("\t"); [l1, l2] }
-  p data
-  p analyze(data)
-  
+  analyze(data)
 end
 
 def main
@@ -72,7 +70,7 @@ def main
   puts '平均'
   print_assessment result.transpose.map(&:mean)
 
-  system('rm -f sentiment.txt.[1-5]*')
+  system('rm -f sentiment.txt.[1-5].*')
 end
 
 main
